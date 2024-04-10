@@ -59,7 +59,6 @@ Widget build(BuildContext context) {
     );
   }
 
-  // ...
+  return Scaffold(body: Center(child: button));
 }
-
 ```

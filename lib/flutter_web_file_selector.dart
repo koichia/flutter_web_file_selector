@@ -49,9 +49,8 @@ export 'src/web_file.dart' show WebFile;
 ///     );
 ///   }
 ///
-///   // ...
+///   return Scaffold(body: Center(child: button));
 /// }
-///
 /// ```
 class WebFileSelector extends StatefulWidget {
   /// Creates a new instance of the WebFileSelector class
