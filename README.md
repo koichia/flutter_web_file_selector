@@ -8,7 +8,7 @@ You might have come across with a situation where the file selection popup menu 
 
 With this package, the popup menu should be placed right next to the button you have tapped.
 
-![Before](images/before-after.png)
+![Before](https://raw.githubusercontent.com/koichia/flutter_web_file_selector/main/images/before-after.png)
 
 ## Usage
 
