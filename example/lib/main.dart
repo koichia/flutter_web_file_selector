@@ -32,13 +32,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool _disabled = false;
 
-  Future<void> _processFiles(List<WebFile> files) async {
-    for (final file in files) {
-      debugPrint('File: ${file.name} (${file.size} bytes, type: ${file.type})');
+  Future<void> _processFiles(List<XFile> files) async {
+    for (final XFile file in files) {
+      debugPrint('File: ${file.name} (MIME type: ${file.mimeType})');
 
       // You can get bytes from the file with these methods:
-      // final bytes = await file.readAsBytes();
-      // final stream = await file.openRead();
+      // final Uint8List bytes = await file.readAsBytes();
+      // final Stream<Uint8List> stream = file.openRead();
       // ...
     }
   }
@@ -69,19 +69,19 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // 1. To use the flutter_web_file_selector package on all web browsers,
     //    you can just use kIsWeb.
-    const useWebFileSelector = kIsWeb;
+    const bool useWebFileSelector = kIsWeb;
     // 2. To use the package only for web browsers running on iOS/iPadOS,
     //    you can use WebFileSelector.isIOSWeb instead.
     // final useWebFileSelector = WebFileSelector.isIOSWeb;
 
     // The "accept" argument in WebFileSelector accepts the same value as the
-    // accept attribute in <input type="file">
+    // accept attribute in <input type="file">.
     // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
-    const acceptedFileTypes = '.pdf, .png, .jpg, .jpeg, .tif, .tiff';
+    const String acceptedFileTypes = '.pdf, .png, .jpg, .jpeg, .tif, .tiff';
 
     // The "multiple" aregument controls whether to let users select
     // multiple files or not.
-    const multipleFiles = true;
+    const bool multipleFiles = true;
 
     // onPress event handler for buttons
     void Function()? onPressed;
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // onData event handler for WebFileSelector widget
-    void Function(List<WebFile> files)? onData;
+    void Function(List<XFile> files)? onData;
     if (!_disabled) {
       onData = (files) => _processFiles(files);
     }

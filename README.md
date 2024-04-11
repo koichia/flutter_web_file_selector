@@ -29,7 +29,7 @@ Widget build(BuildContext context) {
     onPressed: () {
       if (!WebFileSelector.isIOSWeb) {
         // Not iOS/iPadOS on the web platform
-        // Use file_picker or file_selector package to select files
+        // Use file_selector or file_picker package to select files
       }
     },
     child: const Text('Select Files'),
@@ -42,17 +42,18 @@ Widget build(BuildContext context) {
     button = WebFileSelector(
       onData: (files) async {
         // Received files from the web browser
-        for (final file in files) {
-          debugPrint('${file.name} (${file.size} bytes, mime: ${file.type})');
+        for (final XFile file in files) {
+          debugPrint('${file.name} (MIME type: ${file.mimeType})');
 
           // You can get bytes from the file with these methods:
-          final bytes = await file.readAsBytes();
-          final stream = await file.openRead();
+          final Uint8List bytes = await file.readAsBytes();
+          final Stream<Uint8List> stream = file.openRead();
           // ...
         }
       },
-      // The "accept" argument accepts the same value as the accept attribute in <input type="file">
-      // Reference: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
+      // The "accept" argument accepts the same value as the
+      // accept attribute in <input type="file">.
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
       accept: '.pdf, .png, .jpg, .jpeg, .tif, .tiff',
       multiple: true,
       child: button,

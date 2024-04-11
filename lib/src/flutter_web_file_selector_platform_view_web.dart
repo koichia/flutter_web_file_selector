@@ -1,70 +1,9 @@
-import 'dart:async';
 import 'dart:js_interop' as js;
 import 'dart:js_interop_unsafe';
-import 'dart:typed_data';
 import 'dart:ui_web' as ui_web;
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/widgets.dart';
 import 'package:web/web.dart' as web;
-
-import 'web_file.dart';
-
-class WebFileWeb implements WebFile {
-  WebFileWeb(Object file) : _file = file as web.File;
-
-  final web.File _file;
-
-  @override
-  String get name {
-    return _file.name;
-  }
-
-  @override
-  int get size {
-    return _file.size;
-  }
-
-  @override
-  String get type {
-    return _file.type;
-  }
-
-  @override
-  DateTime get lastModifiedDate {
-    return DateTime.fromMillisecondsSinceEpoch(_file.lastModified);
-  }
-
-  @override
-  Future<Uint8List> readAsBytes() {
-    final completer = Completer<Uint8List>();
-
-    onloadEventHandler(web.Event event) {
-      if (event.target != null) {
-        final target = event.target!;
-        if (target is web.FileReader) {
-          final result = target.result;
-          if (result != null) {
-            if (result is ByteBuffer) {
-              final byteBuffer = result as ByteBuffer;
-              final bytes = byteBuffer.asUint8List();
-              completer.complete(bytes);
-            }
-          }
-        }
-      }
-    }
-
-    final reader = web.FileReader();
-    reader.onload = onloadEventHandler.toJS;
-    reader.readAsArrayBuffer(_file);
-
-    return completer.future;
-  }
-
-  @override
-  Future<Stream<List<int>>> openRead() {
-    return readAsBytes().then((bytes) => Stream.value(List<int>.from(bytes)));
-  }
-}
 
 class WebFileSelectorPlatformView {
   WebFileSelectorPlatformView._() : _viewType = _getNewViewType();
@@ -73,7 +12,7 @@ class WebFileSelectorPlatformView {
   static const _buttonElementClassName = 'web-selector-file-upload-button';
   static int _currID = 0;
 
-  void Function(List<WebFile> files)? onData;
+  void Function(List<XFile> files)? onData;
   final String _viewType;
   String? _accept;
   bool? _multiple;
@@ -205,7 +144,7 @@ class WebFileSelectorPlatformView {
 
           inputElement.onChange.listen((event) {
             if (onData != null) {
-              final List<WebFile> webFiles = [];
+              final List<XFile> webFiles = [];
 
               final target = event.target;
               if (target != null) {
@@ -215,7 +154,17 @@ class WebFileSelectorPlatformView {
                     for (var idx = 0; idx < files.length; ++idx) {
                       final file = files.item(idx);
                       if (file != null) {
-                        webFiles.add(WebFileWeb(file));
+                        webFiles.add(
+                          XFile(
+                            web.URL.createObjectURL(file),
+                            name: file.name,
+                            length: file.size,
+                            lastModified: DateTime.fromMillisecondsSinceEpoch(
+                              file.lastModified,
+                            ),
+                            mimeType: file.type,
+                          ),
+                        );
                       }
                     }
                   }
@@ -270,7 +219,7 @@ class WebFileSelectorPlatformView {
 
   Widget build(
     BuildContext context, {
-    required void Function(List<WebFile> files)? onData,
+    required void Function(List<XFile> files)? onData,
     required Widget child,
     String? accept,
     bool? multiple,

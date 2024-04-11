@@ -1,11 +1,10 @@
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/widgets.dart';
 
 import 'src/flutter_web_file_selector_platform_view_none.dart'
     if (dart.library.js_interop) 'src/flutter_web_file_selector_platform_view_web.dart';
 
-import 'src/web_file.dart';
-
-export 'src/web_file.dart' show WebFile;
+export 'package:cross_file/cross_file.dart' show XFile;
 
 /// Enables selecting files on the web platform.
 ///
@@ -19,7 +18,7 @@ export 'src/web_file.dart' show WebFile;
 ///     onPressed: () {
 ///       if (!WebFileSelector.isIOSWeb) {
 ///         // Not iOS/iPadOS on the web platform
-///         // Use file_picker or file_selector package to select files
+///         // Use file_selector or file_picker package to select files
 ///       }
 ///     },
 ///     child: const Text('Select Files'),
@@ -32,12 +31,12 @@ export 'src/web_file.dart' show WebFile;
 ///     button = WebFileSelector(
 ///       onData: (files) async {
 ///         // Received files from the web browser
-///         for (final file in files) {
-///           debugPrint('${file.name} (${file.size} bytes, mime: ${file.type})');
+///         for (final XFile file in files) {
+///           debugPrint('${file.name} (MIME type: ${file.mimeType})');
 ///
 ///           // You can get bytes from the file with these methods:
-///           final bytes = await file.readAsBytes();
-///           final stream = await file.openRead();
+///           final Uint8List bytes = await file.readAsBytes();
+///           final Stream<Uint8List> stream = file.openRead();
 ///           // ...
 ///         }
 ///       },
@@ -62,7 +61,7 @@ class WebFileSelector extends StatefulWidget {
       this.multiple});
 
   /// A callback function that is called when user selects files
-  final void Function(List<WebFile> files)? onData;
+  final void Function(List<XFile> files)? onData;
 
   /// A child widget
   final Widget child;
