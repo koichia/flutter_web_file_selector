@@ -229,17 +229,21 @@ class WebFileSelectorPlatformView {
     this.accept = accept;
     this.multiple = multiple;
 
-    return IntrinsicWidth(
-      child: IntrinsicHeight(
-        child: Stack(
-          children: [
-            HtmlElementView(
-              viewType: _viewType,
-            ),
-            child,
-          ],
+    if (onData != null) {
+      return IntrinsicWidth(
+        child: IntrinsicHeight(
+          child: Stack(
+            children: [
+              HtmlElementView(
+                viewType: _viewType,
+              ),
+              child,
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return child;
+    }
   }
 }
