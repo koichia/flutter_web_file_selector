@@ -186,11 +186,12 @@ class WebFileSelectorPlatformView {
           buttonElement.className = _buttonElementClassName;
 
           buttonElement.text = '';
-          buttonElement.style.opacity = '0';
+          buttonElement.style.opacity = '0.001';
           buttonElement.style.width = '100%';
           buttonElement.style.height = '100%';
           buttonElement.style.border = '0';
           buttonElement.style.backgroundColor = 'transparent';
+          buttonElement.style.cursor = 'pointer';
 
           buttonElement.onClick.listen((event) {
             if (onData != null) {
