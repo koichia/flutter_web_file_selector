@@ -46,13 +46,13 @@ class WebFileSelectorPlatformView {
       return false;
     }
 
-    if (userAgent.contains('(iPhone; ')) {
+    if (userAgent.contains('(iPhone;')) {
       // iPhone
       return true;
-    } else if (userAgent.contains('(iPad; ')) {
+    } else if (userAgent.contains('(iPad;')) {
       // iPadOS < 13
       return true;
-    } else if (userAgent.contains('(Macintosh; ')) {
+    } else if (userAgent.contains('(Macintosh;')) {
       // iPadOS >= 13, macOS
 
       // iPad has a touch capability whereas macOS does not (for now)
