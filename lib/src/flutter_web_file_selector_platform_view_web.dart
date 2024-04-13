@@ -137,8 +137,8 @@ class WebFileSelectorPlatformView {
           inputElement.className = _inputElementClassName;
 
           inputElement.hidden = true.toJS;
-          inputElement.type = "file";
-          inputElement.title = "";
+          inputElement.type = 'file';
+          inputElement.title = '';
           inputElement.accept = accept ?? '';
           inputElement.multiple = multiple ?? false;
 
