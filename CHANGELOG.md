@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Fix incorrect cursor when mouse is hovered over the button
+
 ## 0.2.0
 
 * Breaking change: Now using XFile class (from cross_file package) instead of WebFile class.
