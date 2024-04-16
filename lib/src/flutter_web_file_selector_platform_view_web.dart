@@ -157,6 +157,13 @@ class WebFileSelectorPlatformView {
         labelElement.style.backgroundColor = 'transparent';
         labelElement.style.cursor = 'pointer';
 
+        // This is to prevent mobile version of Chrome from
+        // applying a highlight color when tapped.
+        labelElement.attributeStyleMap.set(
+          '-webkit-tap-highlight-color',
+          'transparent'.toJS,
+        );
+
         // Add HTML input element
         {
           final inputElement = web.HTMLInputElement();
