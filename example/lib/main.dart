@@ -156,6 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('Press one of the buttons to select files'),
+            const SizedBox(height: 10),
             selectFilesButton, // "Select Files" button
             const SizedBox(height: 20),
             toggleButton, // "Enable/Disable Buttons" button
