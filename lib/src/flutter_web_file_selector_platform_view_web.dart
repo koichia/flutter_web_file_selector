@@ -8,14 +8,13 @@ import 'package:web/web.dart' as web;
 class WebFileSelectorPlatformView {
   WebFileSelectorPlatformView._() : _viewType = _getNewViewType();
 
-  static const _inputElementClassName = 'web-selector-file-upload-input';
-  static const _buttonElementClassName = 'web-selector-file-upload-button';
   static int _currID = 0;
 
   void Function(List<XFile> files)? onData;
   final String _viewType;
   String? _accept;
   bool? _multiple;
+  int? _viewId;
 
   static bool _isTouchEnabled() {
     return (web.document.hasProperty('ontouchend'.toJS).toDart);
@@ -90,12 +89,14 @@ class WebFileSelectorPlatformView {
     if (_accept != val || oldValue != newValue) {
       _accept = val;
 
-      final elements =
-          web.document.querySelectorAll('input.$_inputElementClassName');
-      for (var idx = 0; idx < elements.length; ++idx) {
-        final element = elements.item(idx) as web.Element;
-        if (element is web.HTMLInputElement) {
-          element.accept = _accept ?? '';
+      if (_inputElementID != null) {
+        // The input element is already created.
+        // Get the element and update its accept attribute.
+        final element = web.document.getElementById(_inputElementID!);
+        if (element != null) {
+          if (element is web.HTMLInputElement) {
+            element.accept = _accept ?? '';
+          }
         }
       }
     }
@@ -112,14 +113,26 @@ class WebFileSelectorPlatformView {
     if (_multiple != val || oldValue != newValue) {
       _multiple = val;
 
-      final elements =
-          web.document.querySelectorAll('input.$_inputElementClassName');
-      for (var idx = 0; idx < elements.length; ++idx) {
-        final element = elements.item(idx) as web.Element;
-        if (element is web.HTMLInputElement) {
-          element.multiple = _multiple ?? false;
+      if (_inputElementID != null) {
+        // The input element is already created.
+        // Get the element and update its multiple attribute.
+        final element = web.document.getElementById(_inputElementID!);
+        if (element != null) {
+          if (element is web.HTMLInputElement) {
+            element.multiple = _multiple ?? false;
+          }
         }
       }
+    }
+  }
+
+  String? get _inputElementID {
+    if (_viewId != null) {
+      // We have the unique view ID already
+      return 'web-selector-file-upload-input-${_viewId!}';
+    } else {
+      // We don't have the unique view ID yet
+      return null;
     }
   }
 
@@ -127,6 +140,10 @@ class WebFileSelectorPlatformView {
     ui_web.platformViewRegistry.registerViewFactory(
       _viewType,
       (int viewId) {
+        _viewId = viewId;
+
+        final inputElementID = _inputElementID!;
+
         final divElement = web.HTMLDivElement();
         divElement.style.width = '100%';
         divElement.style.height = '100%';
@@ -134,7 +151,7 @@ class WebFileSelectorPlatformView {
         // Add HTML input element
         {
           final inputElement = web.HTMLInputElement();
-          inputElement.className = _inputElementClassName;
+          inputElement.id = inputElementID;
 
           inputElement.hidden = true.toJS;
           inputElement.type = 'file';
@@ -183,7 +200,6 @@ class WebFileSelectorPlatformView {
         // Add HTML button element
         {
           final buttonElement = web.HTMLButtonElement();
-          buttonElement.className = _buttonElementClassName;
 
           buttonElement.text = '';
           buttonElement.style.opacity = '0.001';
@@ -197,9 +213,7 @@ class WebFileSelectorPlatformView {
             if (onData != null) {
               final target = event.target as web.HTMLElement;
               if (target.parentElement != null) {
-                final parentElement = target.parentElement!;
-                final element = parentElement
-                    .querySelector('input.$_inputElementClassName');
+                final element = web.document.getElementById(inputElementID);
                 if (element != null) {
                   final inputElement = element;
                   if (inputElement is web.HTMLInputElement) {
