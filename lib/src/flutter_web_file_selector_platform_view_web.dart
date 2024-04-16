@@ -144,16 +144,28 @@ class WebFileSelectorPlatformView {
 
         final inputElementID = _inputElementID!;
 
-        final divElement = web.HTMLDivElement();
-        divElement.style.width = '100%';
-        divElement.style.height = '100%';
+        // Add HTML label element
+        final labelElement = web.HTMLLabelElement();
+        labelElement.htmlFor = inputElementID;
+
+        labelElement.style.display = 'block';
+        labelElement.style.position = 'absolute';
+        labelElement.style.opacity = '0.001';
+        labelElement.style.width = '100%';
+        labelElement.style.height = '100%';
+        labelElement.style.border = '0';
+        labelElement.style.backgroundColor = 'transparent';
+        labelElement.style.cursor = 'pointer';
 
         // Add HTML input element
         {
           final inputElement = web.HTMLInputElement();
           inputElement.id = inputElementID;
 
-          inputElement.hidden = true.toJS;
+          inputElement.style.position = 'absolute';
+          inputElement.style.inset = '0';
+          inputElement.style.display = 'none';
+
           inputElement.type = 'file';
           inputElement.title = '';
           inputElement.accept = accept ?? '';
@@ -194,40 +206,10 @@ class WebFileSelectorPlatformView {
             }
           });
 
-          divElement.append(inputElement);
+          labelElement.append(inputElement);
         }
 
-        // Add HTML button element
-        {
-          final buttonElement = web.HTMLButtonElement();
-
-          buttonElement.text = '';
-          buttonElement.style.opacity = '0.001';
-          buttonElement.style.width = '100%';
-          buttonElement.style.height = '100%';
-          buttonElement.style.border = '0';
-          buttonElement.style.backgroundColor = 'transparent';
-          buttonElement.style.cursor = 'pointer';
-
-          buttonElement.onClick.listen((event) {
-            if (onData != null) {
-              final target = event.target as web.HTMLElement;
-              if (target.parentElement != null) {
-                final element = web.document.getElementById(inputElementID);
-                if (element != null) {
-                  final inputElement = element;
-                  if (inputElement is web.HTMLInputElement) {
-                    inputElement.click();
-                  }
-                }
-              }
-            }
-          });
-
-          divElement.append(buttonElement);
-        }
-
-        return divElement;
+        return labelElement;
       },
     );
   }
