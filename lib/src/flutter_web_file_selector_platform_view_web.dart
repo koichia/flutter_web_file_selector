@@ -17,7 +17,7 @@ class WebFileSelectorPlatformView {
   String? _accept;
   bool? _multiple;
 
-  static bool isTouchEnabled() {
+  static bool _isTouchEnabled() {
     return (web.document.hasProperty('ontouchend'.toJS).toDart);
   }
 
@@ -56,7 +56,7 @@ class WebFileSelectorPlatformView {
       // iPadOS >= 13, macOS
 
       // iPad has a touch capability whereas macOS does not (for now)
-      if (isTouchEnabled()) {
+      if (_isTouchEnabled()) {
         return true; // iPadOS >= 13
       } else {
         return false; // macOS
