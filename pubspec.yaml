@@ -1,6 +1,6 @@
 name: flutter_web_file_selector
 description: "A Flutter package to let you select files on the Web platform."
-version: 0.2.2
+version: 0.2.3
 homepage: https://github.com/koichia/flutter_web_file_selector
 
 environment:
