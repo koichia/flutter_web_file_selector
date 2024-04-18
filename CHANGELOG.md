@@ -1,3 +1,7 @@
+## 0.2.3
+
+* Fix an error in Firefox (tested on Flutter 3.19.6)
+
 ## 0.2.2
 
 * Make internal implementation simpler.
