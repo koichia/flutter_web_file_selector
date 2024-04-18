@@ -1,3 +1,7 @@
+## 0.2.4
+
+* Fix a regression (incorrect button highlight) on mobile Chrome
+
 ## 0.2.3
 
 * Fix an error in Firefox (tested on Flutter 3.19.6)
