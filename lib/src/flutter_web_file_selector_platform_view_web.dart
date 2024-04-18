@@ -157,13 +157,18 @@ class WebFileSelectorPlatformView {
         labelElement.style.backgroundColor = 'transparent';
         labelElement.style.cursor = 'pointer';
 
-        // This is to prevent mobile version of Chrome from
-        // applying a highlight color when tapped.
-        if (web.CSS.supports('-webkit-tap-highlight-color: transparent')) {
-          labelElement.attributeStyleMap.set(
-            '-webkit-tap-highlight-color',
-            'transparent'.toJS,
-          );
+        try {
+          // This is to prevent mobile version of Chrome from
+          // applying a highlight color when tapped.
+          if (web.CSS.supports('-webkit-tap-highlight-color: transparent')) {
+            labelElement.attributeStyleMap.set(
+              '-webkit-tap-highlight-color',
+              'transparent'.toJS,
+            );
+          }
+        } catch (_) {
+          // CSS.support() is probably not supported the
+          // browser this code is currently running on.
         }
 
         // Add HTML input element
