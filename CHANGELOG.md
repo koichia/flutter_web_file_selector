@@ -1,3 +1,7 @@
+## 0.3.1
+
+* Update documentation.
+
 ## 0.3.0
 
 * Update the supported version range for the web package
