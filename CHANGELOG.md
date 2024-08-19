@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Update the supported version range for the web package
+
 ## 0.2.4
 
 * Fix a regression (incorrect button highlight) on mobile Chrome
