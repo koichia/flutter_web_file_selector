@@ -4,11 +4,10 @@ A Flutter package to let you select files on the Web platform. It is made specif
 
 ## Features
 
-You might have come across with a situation where the file selection popup menu on iOS/iPadOS web browsers are positioned far away from where you tapped, like this:
+You might have come across with a situation where the file selection popup menu on iOS/iPadOS web browsers are positioned far away from where you tapped. With this package, the popup menu should be placed right next to the button you have tapped.
 
 ![Before](https://raw.githubusercontent.com/koichia/flutter_web_file_selector/main/images/before-after.png)
 
-With this package, the popup menu should be placed right next to the button you have tapped.
 
 ## Usage
 
