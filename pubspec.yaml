@@ -1,6 +1,6 @@
 name: flutter_web_file_selector
-description: "A Flutter package to let you select files on the Web platform."
-version: 0.2.4
+description: "A Flutter package to let you select files on the Web platform, with an iOS UI workaround included."
+version: 0.3.0
 homepage: https://github.com/koichia/flutter_web_file_selector
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  web: ^0.5.0
+  web: '>=0.5.1 <2.0.0'
   cross_file: ^0.3.4
 
 dev_dependencies:
